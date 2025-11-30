@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel Bunga</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <section class="section">
+        <h2 class="section-title">Artikel & Tips</h2>
+        <p style="text-align: center; margin-bottom: 30px;">Temukan wawasan menarik seputar perawatan bunga dan fakta unik lainnya.</p>
+        
+        <div class="grid-container" id="article-list">
+            <p style="text-align:center; width:100%;">Memuat artikel...</p>
+        </div>
+    </section>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
+        <a href="catalog.html" class="nav-item"><i class="fas fa-seedling"></i> Jenis</a>
+        <a href="article.html" class="nav-item active"><i class="fas fa-book-open"></i> Artikel</a>
+        <a href="about.html" class="nav-item"><i class="fas fa-info-circle"></i> Tentang</a>
+    </nav>
+
+    <script src="script.js"></script>
+    <script>
+        // Panggil fungsi loadArticles saat halaman dibuka
+        loadArticles(); 
+    </script>
+</body>
+</html>

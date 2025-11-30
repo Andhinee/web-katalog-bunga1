@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail - FloraPedia</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* CSS Khusus Halaman Detail */
+        .detail-img { width: 100%; height: 300px; object-fit: cover; border-radius: 0 0 20px 20px; }
+        .detail-content { padding: 20px; background: white; margin-top: -20px; border-radius: 20px; position: relative; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); }
+        .detail-tag { display: inline-block; background: var(--secondary); padding: 5px 15px; border-radius: 15px; font-size: 0.8rem; color: var(--dark); margin-right: 5px; }
+        .info-box { background: #fafafa; padding: 15px; border-radius: 10px; margin-top: 20px; border-left: 4px solid var(--accent); }
+        .info-label { font-weight: bold; display: block; margin-bottom: 5px; color: var(--dark); }
+    </style>
+</head>
+<body>
+
+    <div id="detail-container">
+        <p style="text-align: center; padding: 50px;">Sedang memuat data...</p>
+    </div>
+
+    <div style="padding: 20px; text-align: center; margin-bottom: 60px;">
+        <button onclick="history.back()" class="btn-cta" style="background: #ddd; color: #333;">Kembali</button>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
+        <a href="catalog.html" class="nav-item"><i class="fas fa-seedling"></i> Jenis</a>
+        <a href="article.html" class="nav-item"><i class="fas fa-book-open"></i> Artikel</a>
+        <a href="about.html" class="nav-item"><i class="fas fa-info-circle"></i> Tentang</a>
+    </nav>
+
+    <script src="script.js"></script>
+    <script>
+        // Panggil fungsi loadDetail saat halaman dibuka
+        loadDetail();
+    </script>
+</body>
+</html>

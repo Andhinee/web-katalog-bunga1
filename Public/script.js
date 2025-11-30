@@ -1,48 +1,72 @@
 const API_URL = '/api'; // Relative path agar jalan di Vercel
 
-// --- Logic Home & Catalog ---
+// ==========================================
+// 1. LOGIC HOME & CATALOG (Bunga)
+// ==========================================
+
 async function loadFeatured() {
-    // Mengambil data bunga populer
-    const res = await fetch(`${API_URL}/flowers?category=Bunga Populer`);
-    const data = await res.json();
+    // Mengambil data bunga populer untuk ditampilkan di Home
     const container = document.getElementById('featured-flowers');
-    if(container) {
+    if (!container) return; // Stop jika elemen tidak ada di halaman ini
+
+    try {
+        const res = await fetch(`${API_URL}/flowers?category=Bunga Populer`);
+        const data = await res.json();
+        
         container.innerHTML = data.map(flower => `
             <div class="card" onclick="location.href='detail.html?id=${flower.id}'">
                 <img src="${flower.image_url}" alt="${flower.name}">
                 <div class="card-content">
                     <div class="card-title">${flower.name}</div>
-                    <small>${flower.latin_name}</small>
+                    <small>${flower.latin_name || ''}</small>
                 </div>
             </div>
         `).join('');
+    } catch (error) {
+        console.error("Gagal memuat featured flowers:", error);
     }
 }
 
 async function loadCatalog() {
+    const container = document.getElementById('catalog-list');
+    if (!container) return;
+
     const urlParams = new URLSearchParams(window.location.search);
     const catParam = urlParams.get('cat');
     
     let endpoint = `${API_URL}/flowers`;
     if(catParam) endpoint += `?category=${catParam}`;
 
-    const res = await fetch(endpoint);
-    const data = await res.json();
-    renderCatalog(data);
-    
-    // Set dropdown value jika ada param
-    if(catParam) document.getElementById('filter-category').value = catParam;
+    try {
+        const res = await fetch(endpoint);
+        const data = await res.json();
+        renderCatalog(data);
+        
+        // Set dropdown value jika ada param di URL
+        const filterSelect = document.getElementById('filter-category');
+        if(catParam && filterSelect) filterSelect.value = catParam;
+    } catch (error) {
+        console.error("Gagal memuat katalog:", error);
+    }
 }
 
 function renderCatalog(data) {
     const container = document.getElementById('catalog-list');
     if(!container) return;
+    
+    if (data.length === 0) {
+        container.innerHTML = '<p style="text-align:center; width:100%;">Tidak ada bunga ditemukan.</p>';
+        return;
+    }
+
     container.innerHTML = data.map(flower => `
         <div class="card" onclick="location.href='detail.html?id=${flower.id}'">
             <img src="${flower.image_url}" alt="${flower.name}">
             <div class="card-content">
                 <div class="card-title">${flower.name}</div>
-                <p style="font-size:0.8rem; color:#666;">${flower.description ? flower.description.substring(0, 50) + '...' : ''}</p>
+                <p style="font-size:0.8rem; color:#666;">
+                    ${flower.description ? flower.description.substring(0, 50) + '...' : ''}
+                </p>
             </div>
         </div>
     `).join('');
@@ -56,54 +80,48 @@ async function filterFlowers() {
     if(search) url += `search=${search}&`;
     if(cat) url += `category=${cat}`;
 
-    const res = await fetch(url);
-    const data = await res.json();
-    renderCatalog(data);
-}
-
-// --- Logic Admin (Login & Upload) ---
-async function login() {
-    const u = document.getElementById('username').value;
-    const p = document.getElementById('password').value;
-    
-    const res = await fetch(`${API_URL}/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: u, password: p })
-    });
-    const result = await res.json();
-    
-    if(result.success) {
-        localStorage.setItem('isAdmin', true);
-        document.getElementById('login-section').style.display = 'none';
-        document.getElementById('admin-panel').style.display = 'block';
-    } else {
-        alert('Login Gagal');
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        renderCatalog(data);
+    } catch (error) {
+        console.error("Gagal filter bunga:", error);
     }
 }
 
-// Cek Login saat buka admin page
-if(window.location.pathname.includes('admin.html')) {
-    if(localStorage.getItem('isAdmin')) {
-        document.getElementById('login-section').style.display = 'none';
-        document.getElementById('admin-panel').style.display = 'block';
-    }
+// ==========================================
+// 2. LOGIC HALAMAN ARTIKEL
+// ==========================================
 
-    // Handle Form Submit
-    document.getElementById('addFlowerForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target); // Ambil semua input termasuk file
-        
-        const res = await fetch(`${API_URL}/flowers`, {
-            method: 'POST',
-            body: formData // Kirim sebagai Multipart
-        });
-        
-        if(res.ok) {
-            alert('Bunga berhasil ditambahkan!');
-            e.target.reset();
-        } else {
-            alert('Gagal upload');
+async function loadArticles() {
+    const container = document.getElementById('article-list');
+    if (!container) return;
+
+    try {
+        const res = await fetch(`${API_URL}/articles`);
+        const data = await res.json();
+
+        if (data.length === 0) {
+            container.innerHTML = '<p style="text-align:center; width:100%;">Belum ada artikel.</p>';
+            return;
         }
-    });
+
+        container.innerHTML = data.map(article => `
+            <div class="card" onclick="location.href='detail.html?type=article&id=${article.id}'">
+                <img src="${article.image_url}" alt="${article.title}" onerror="this.src='https://via.placeholder.com/300'">
+                <div class="card-content">
+                    <div class="card-title">${article.title}</div>
+                    <p style="font-size:0.9rem; color:#666; margin-bottom:10px;">
+                        ${article.summary || 'Baca selengkapnya untuk mengetahui lebih lanjut.'}
+                    </p>
+                    <span style="color: var(--accent); font-weight:bold; font-size:0.8rem;">Baca Selengkapnya &rarr;</span>
+                </div>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error("Gagal memuat artikel:", error);
+        container.innerHTML = `<p style="text-align:center;">Gagal memuat artikel.</p>`;
+    }
 }
+
+// =================================
