@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FloraPedia - Katalog Bunga</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <header class="hero">
+        <div>
+            <h1>Eksplorasi Jenis Bunga Dunia</h1>
+            <p>Temukan keindahan, makna, dan cara merawat bunga favoritmu.</p>
+            <br>
+            <a href="catalog.html" class="btn-cta">Jelajahi Bunga</a>
+        </div>
+    </header>
+
+    <section class="section">
+        <p style="text-align: center;">Selamat datang di FloraPedia. Kami menyediakan informasi lengkap tentang berbagai jenis bunga, mulai dari bunga hias hingga bunga langka.</p>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Kategori Bunga</h2>
+        <div class="grid-container">
+            <div class="card" onclick="location.href='catalog.html?cat=Bunga Hias'">
+                <div class="card-content" style="text-align: center;">
+                    <i class="fas fa-spa fa-2x" style="color: var(--accent);"></i>
+                    <p>Bunga Hias</p>
+                </div>
+            </div>
+            <div class="card" onclick="location.href='catalog.html?cat=Bunga Tropis'">
+                <div class="card-content" style="text-align: center;">
+                    <i class="fas fa-sun fa-2x" style="color: orange;"></i>
+                    <p>Tropis</p>
+                </div>
+            </div>
+             <div class="card" onclick="location.href='catalog.html?cat=Bunga Populer'">
+                <div class="card-content" style="text-align: center;">
+                    <i class="fas fa-star fa-2x" style="color: gold;"></i>
+                    <p>Populer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Featured Flowers</h2>
+        <div class="grid-container" id="featured-flowers">
+            </div>
+    </section>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item active"><i class="fas fa-home"></i> Home</a>
+        <a href="catalog.html" class="nav-item"><i class="fas fa-seedling"></i> Jenis</a>
+        <a href="article.html" class="nav-item"><i class="fas fa-book-open"></i> Artikel</a>
+        <a href="about.html" class="nav-item"><i class="fas fa-info-circle"></i> Tentang</a>
+    </nav>
+
+    <script src="script.js"></script>
+    <script>loadFeatured();</script>
+</body>
+</html>

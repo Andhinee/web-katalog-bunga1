@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="section" id="login-section">
+        <h2>Login Admin</h2>
+        <input type="text" id="username" placeholder="Username">
+        <br><br>
+        <input type="password" id="password" placeholder="Password">
+        <br><br>
+        <button onclick="login()" class="btn-cta">Login</button>
+    </section>
+
+    <section class="section" id="admin-panel" style="display:none;">
+        <h2>Tambah Bunga Baru</h2>
+        <form id="addFlowerForm">
+            <div class="form-group"><input type="text" name="name" placeholder="Nama Bunga" required></div>
+            <div class="form-group"><input type="text" name="latin_name" placeholder="Nama Latin"></div>
+            <div class="form-group">
+                <select name="category_name">
+                    <option value="Bunga Hias">Bunga Hias</option>
+                    <option value="Bunga Tropis">Bunga Tropis</option>
+                    <option value="Bunga Musiman">Bunga Musiman</option>
+                    <option value="Bunga Populer">Bunga Populer</option>
+                </select>
+            </div>
+            <div class="form-group"><textarea name="description" placeholder="Deskripsi"></textarea></div>
+            <div class="form-group"><textarea name="care_tips" placeholder="Tips Perawatan"></textarea></div>
+            <div class="form-group"><input type="file" name="image" required accept="image/*"></div>
+            
+            <button type="submit" class="btn-cta">Upload Data</button>
+        </form>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
